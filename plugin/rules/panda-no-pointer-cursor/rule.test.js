@@ -15,7 +15,7 @@ const ruleTester = new RuleTester({
   },
 });
 
-ruleTester.run('no-pointer-cursor', rule, {
+ruleTester.run('panda-no-pointer-cursor', rule, {
   valid: [
     "const Button = styled('button', { base: { cursor: 'default' } });",
     "const view = <div style={{ cursor: 'pointer' }} />;",

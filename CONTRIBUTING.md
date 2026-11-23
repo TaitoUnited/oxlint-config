@@ -65,7 +65,7 @@ The package ships plain ESM JavaScript without a build step. Oxlint loads `oxlin
 
    The rule API is ESLint-compatible. Read the [Oxlint JS plugin docs](https://oxc.rs/docs/guide/usage/linter/js-plugins.html) for what is supported. JS plugins have no type information, so match syntax and imports, not types.
 
-   Prefix rules for a specific technology with its name, for example `graphql-no-description` (enabled as `taito/graphql-no-description`).
+   Prefix a rule that only applies to one library with the library's name: `react-`, `lingui-`, `panda-` or `graphql-`, for example `graphql-no-description` (enabled as `taito/graphql-no-description`). Blank-line rules use `readability-padding-`. Rules for any TS/JS code have no prefix.
 
 2. Register it in [`plugin/index.js`](plugin/index.js) (keep the list alphabetical).
 3. Add `plugin/rules/<rule-name>/rule.test.js` (see [Testing rules](#testing-rules)). `test/plugin.test.js` fails without it.

@@ -59,7 +59,7 @@ const baseCases = [
       'export function joinNames(first: string, second: string) { return first + second; }',
   },
   {
-    code: 'taito(no-extra-empty-lines)',
+    code: 'taito(readability-padding-no-extra-empty-lines)',
     valid: 'export const first = 1;\n\nexport const second = 2;',
     invalid: 'export const first = 1;\n\n\nexport const second = 2;',
   },
@@ -177,7 +177,7 @@ export default defineConfig({
       cases: [
         ...baseCases,
         {
-          code: 'taito(no-function-deps-in-effect)',
+          code: 'taito(react-no-function-deps-in-effect)',
           extension: 'tsx',
           valid:
             "import { useEffect } from 'react';\n\nexport function useSync(value: string) {\n  useEffect(() => {\n    console.info(value);\n  }, [value]);\n}",
@@ -209,7 +209,7 @@ export default defineConfig({
             "import { Trans } from '@lingui/react';\n\nexport { Trans };",
         },
         {
-          code: 'taito(no-module-scope-trans)',
+          code: 'taito(lingui-no-module-scope-trans)',
           extension: 'tsx',
           valid:
             "import { Trans } from '@lingui/react/macro';\n\nexport function Title() {\n  return <Trans>Projects</Trans>;\n}",
@@ -231,7 +231,7 @@ export default defineConfig({
           invalid: 'export const image = <img src="/logo.svg" />;',
         },
         {
-          code: 'taito(no-pointer-cursor)',
+          code: 'taito(panda-no-pointer-cursor)',
           valid:
             "import { css } from '~/styled-system/css';\n\nexport const button = css({ cursor: 'default' });",
           invalid:
@@ -293,14 +293,14 @@ import base from '@taito/oxlint-config';
 export default defineConfig({
   extends: [base],
   rules: {
-    'taito/no-redundant-stack': ['error', { stackModules: ['~/ui/stack'] }],
+    'taito/react-no-redundant-stack': ['error', { stackModules: ['~/ui/stack'] }],
     'taito/no-ssr-guards': 'error',
     'taito/graphql-no-typename-selection': 'error',
   },
 });`,
       cases: [
         {
-          code: 'taito(no-redundant-stack)',
+          code: 'taito(react-no-redundant-stack)',
           extension: 'tsx',
           valid:
             'import { Stack } from \'~/ui/stack\';\n\nexport const view = (\n  <Stack gap="1">\n    <span />\n    <span />\n  </Stack>\n);',

@@ -20,7 +20,7 @@ const styledImport = "import { styled } from '@/design-system/jsx';\n";
 const singleChildStack = { messageId: 'singleChildStack' };
 const emptyStyled = { messageId: 'emptyStyled' };
 
-ruleTester.run('no-redundant-stack', rule, {
+ruleTester.run('react-no-redundant-stack', rule, {
   valid: [
     `${stackImport}const view = <Stack gap="sm"><Text /><Text /></Stack>;`,
     `${stackImport}const view = <Stack gap="sm">Label<Icon /></Stack>;`,
@@ -74,7 +74,7 @@ ruleTester.run('no-redundant-stack', rule, {
   ],
 });
 
-ruleTester.run('no-redundant-stack with options', rule, {
+ruleTester.run('react-no-redundant-stack with options', rule, {
   valid: [
     // The default module is not a Stack once stackModules is replaced.
     {

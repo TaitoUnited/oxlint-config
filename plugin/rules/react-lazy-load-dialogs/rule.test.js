@@ -17,7 +17,7 @@ const ruleTester = new RuleTester({
 
 const filename = '/repo/client/src/features/meeting/meeting-dialog-details.tsx';
 
-ruleTester.run('lazy-load-dialogs', rule, {
+ruleTester.run('react-lazy-load-dialogs', rule, {
   valid: [
     ...[
       'import loadable from "@loadable/component"; const MeetingEditDialog = loadable(() => import("./meeting-dialog-edit").then(mod => mod.MeetingEditDialog));',
@@ -60,7 +60,7 @@ ruleTester.run('lazy-load-dialogs', rule, {
   ],
 });
 
-ruleTester.run('lazy-load-dialogs with ignorePattern', rule, {
+ruleTester.run('react-lazy-load-dialogs with ignorePattern', rule, {
   valid: [
     {
       code: 'import { ConfirmDialog } from "~/design-system/confirm-dialog";',

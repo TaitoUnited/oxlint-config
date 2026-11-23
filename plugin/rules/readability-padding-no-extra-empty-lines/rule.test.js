@@ -22,7 +22,7 @@ const tsxRuleTester = new RuleTester({
   },
 });
 
-tsRuleTester.run('no-extra-empty-lines', rule, {
+tsRuleTester.run('readability-padding-no-extra-empty-lines', rule, {
   valid: [
     `function run() {
   const first = 1;
@@ -124,7 +124,7 @@ const second = 2;`,
   ],
 });
 
-tsxRuleTester.run('no-extra-empty-lines-jsx', rule, {
+tsxRuleTester.run('readability-padding-no-extra-empty-lines-jsx', rule, {
   valid: [
     `const view = <p>
   Welcome <strong>{name}</strong> here.

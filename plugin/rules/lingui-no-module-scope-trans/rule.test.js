@@ -15,7 +15,7 @@ const ruleTester = new RuleTester({
   },
 });
 
-ruleTester.run('no-module-scope-trans', rule, {
+ruleTester.run('lingui-no-module-scope-trans', rule, {
   valid: [
     'import { Trans } from "@lingui/react/macro"; export function Title() { return <Trans>Projects</Trans>; }',
     'import { Trans } from "@lingui/react/macro"; export const Title = () => <Trans>Projects</Trans>;',

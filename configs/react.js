@@ -286,7 +286,7 @@ const config = {
     ],
     ...jsxA11yRules,
     ...reactRules,
-    'taito/no-function-deps-in-effect': 'error',
+    'taito/react-no-function-deps-in-effect': 'error',
     'taito/readability-padding-between-jsx-siblings': 'error',
   },
 };

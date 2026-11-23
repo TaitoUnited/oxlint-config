@@ -438,7 +438,7 @@ const config = {
     'unicorn/text-encoding-identifier-case': 'error',
     'unicorn/throw-new-error': 'error',
     'taito/no-chained-type-assertions': 'error',
-    'taito/no-extra-empty-lines': 'error',
+    'taito/readability-padding-no-extra-empty-lines': 'error',
     'taito/no-object-parameters': 'error',
     'taito/no-positional-func-args': 'error',
     'taito/readability-padding-around-control-flow': 'error',

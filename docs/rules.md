@@ -8,7 +8,7 @@ All custom rules live in the `taito` JS plugin that ships with this package. Eve
 | Rule                                                                                                             | Preset | Fix |
 | ---------------------------------------------------------------------------------------------------------------- | ------ | --- |
 | [`no-chained-type-assertions`](#taitono-chained-type-assertions)                                                 | base   |     |
-| [`no-extra-empty-lines`](#taitono-extra-empty-lines)                                                             | base   | ✓   |
+| [`readability-padding-no-extra-empty-lines`](#taitoreadability-padding-no-extra-empty-lines)                     | base   | ✓   |
 | [`no-object-parameters`](#taitono-object-parameters)                                                             | base   |     |
 | [`no-positional-func-args`](#taitono-positional-func-args)                                                       | base   |     |
 | [`readability-padding-around-control-flow`](#taitoreadability-padding-around-control-flow)                       | base   | ✓   |
@@ -16,13 +16,13 @@ All custom rules live in the `taito` JS plugin that ships with this package. Eve
 | [`readability-padding-around-multiline-statement`](#taitoreadability-padding-around-multiline-statement)         | base   | ✓   |
 | [`readability-padding-around-multiline-variable`](#taitoreadability-padding-around-multiline-variable)           | base   | ✓   |
 | [`readability-padding-between-top-level-declarations`](#taitoreadability-padding-between-top-level-declarations) | base   | ✓   |
-| [`no-function-deps-in-effect`](#taitono-function-deps-in-effect)                                                 | react  |     |
+| [`react-no-function-deps-in-effect`](#taitoreact-no-function-deps-in-effect)                                     | react  |     |
 | [`readability-padding-between-jsx-siblings`](#taitoreadability-padding-between-jsx-siblings)                     | react  | ✓   |
-| [`no-module-scope-trans`](#taitono-module-scope-trans)                                                           | lingui |     |
-| [`no-pointer-cursor`](#taitono-pointer-cursor)                                                                   | panda  |     |
+| [`lingui-no-module-scope-trans`](#taitolingui-no-module-scope-trans)                                             | lingui |     |
+| [`panda-no-pointer-cursor`](#taitopanda-no-pointer-cursor)                                                       | panda  |     |
 | [`panda-style-conventions`](#taitopanda-style-conventions)                                                       | panda  |     |
-| [`lazy-load-dialogs`](#taitolazy-load-dialogs)                                                                   | opt-in |     |
-| [`no-redundant-stack`](#taitono-redundant-stack)                                                                 | opt-in |     |
+| [`react-lazy-load-dialogs`](#taitoreact-lazy-load-dialogs)                                                       | opt-in |     |
+| [`react-no-redundant-stack`](#taitoreact-no-redundant-stack)                                                     | opt-in |     |
 | [`no-ssr-guards`](#taitono-ssr-guards)                                                                           | opt-in |     |
 | [`graphql-no-typename-selection`](#taitographql-no-typename-selection)                                           | opt-in |     |
 | [`no-internal-test-mocks`](#taitono-internal-test-mocks)                                                         | opt-in |     |
@@ -43,7 +43,7 @@ export default defineConfig({
   env: base.env,
   rules: {
     'taito/no-ssr-guards': 'error',
-    'taito/no-redundant-stack': [
+    'taito/react-no-redundant-stack': [
       'error',
       { stackModules: ['~/components/stack'] },
     ],
@@ -78,7 +78,7 @@ const user = input as unknown as User; // ✗
 const user = parseUser(input); // ✓ validate instead
 ```
 
-### `taito/no-extra-empty-lines`
+### `taito/readability-padding-no-extra-empty-lines`
 
 Disallows more than one consecutive blank line, and blank lines directly inside the start or end of blocks, classes, objects, arrays, type literals and JSX elements.
 
@@ -121,11 +121,11 @@ Requires exactly one blank line next to multiline variable declarations.
 
 Requires a blank line between top-level declarations. Consecutive single-line `const` or `type` declarations may stay grouped.
 
-The `readability-padding-*` rules split the work so that each boundary is reported by only one rule, and `no-extra-empty-lines` handles excess blank lines. Together they give a consistent vertical rhythm that a formatter does not enforce.
+The `readability-padding-*` rules split the work so that each boundary is reported by only one rule, and `readability-padding-no-extra-empty-lines` handles excess blank lines. Together they give a consistent vertical rhythm that a formatter does not enforce.
 
 ## React rules
 
-### `taito/no-function-deps-in-effect`
+### `taito/react-no-function-deps-in-effect`
 
 Disallows functions in `useEffect` dependency arrays. A changed function reference rarely reflects the intent of an effect. Read the latest callback with `useEffectEvent`, or move the logic. The rule recognizes local functions, function-typed props and parameters, and the known callable outputs of `react-hook-form` (`useForm`, `useFormContext`), Apollo `useMutation` and AI SDK `useChat`.
 
@@ -141,13 +141,13 @@ Requires a blank line after multiline JSX children (elements, fragments and expr
 
 ## Lingui rules
 
-### `taito/no-module-scope-trans`
+### `taito/lingui-no-module-scope-trans`
 
 Disallows `<Trans>` from `@lingui/react/macro` outside a function. Module-scope elements are created once at import time, before the active locale is known.
 
 ## Panda CSS rules
 
-### `taito/no-pointer-cursor`
+### `taito/panda-no-pointer-cursor`
 
 Disallows `cursor: 'pointer'` inside Panda `css`, `cva`, `sva` and `styled` calls. Only links show a pointer cursor. Buttons and other controls keep the default cursor.
 
@@ -166,7 +166,7 @@ The first and second checks assume the project defines the `$truncate` utility a
 
 ## Opt-in rules
 
-### `taito/lazy-load-dialogs`
+### `taito/react-lazy-load-dialogs`
 
 Requires components whose name ends in `Dialog` to be lazy-loaded with `loadable(() => import(...))` when they are imported from application modules (`./`, `../`, `@/`, `~/`). Dialogs are not visible at first, so they should stay out of the importing bundle. Tests and stories are ignored.
 
@@ -174,7 +174,7 @@ Requires components whose name ends in `Dialog` to be lazy-loaded with `loadable
 | --------------- | ------------------------------- | ---------------------------------------------------------------------------------------------- |
 | `ignorePattern` | `(^\|/)src/components/ui(/\|$)` | Resolved import paths that may be imported statically, such as the UI kit's dialog primitives. |
 
-### `taito/no-redundant-stack`
+### `taito/react-no-redundant-stack`
 
 Reports a `Stack` that lays out at most one child (when it sets only `gap`, `direction` or `wrap`), and Panda `styled()` calls without a style config.
 

@@ -32,7 +32,7 @@ const config = {
     'lingui/no-single-variables-to-translate': 'error',
     'lingui/no-trans-inside-trans': 'error',
     'lingui/t-call-in-function': 'error',
-    'taito/no-module-scope-trans': 'error',
+    'taito/lingui-no-module-scope-trans': 'error',
   },
 };
 

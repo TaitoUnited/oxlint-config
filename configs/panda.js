@@ -10,7 +10,7 @@ import { taitoPlugin } from './utils.js';
 const config = {
   jsPlugins: [taitoPlugin],
   rules: {
-    'taito/no-pointer-cursor': 'error',
+    'taito/panda-no-pointer-cursor': 'error',
     'taito/panda-style-conventions': 'error',
   },
 };

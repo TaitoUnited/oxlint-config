@@ -15,7 +15,7 @@ const ruleTester = new RuleTester({
   },
 });
 
-ruleTester.run('no-function-deps-in-effect', rule, {
+ruleTester.run('react-no-function-deps-in-effect', rule, {
   valid: [
     'import * as Apollo from "other"; const [mutate] = Apollo.useMutation(query); useEffect(() => {}, [mutate]);',
     'import { useForm } from "react-hook-form"; let { setValue } = useForm(); setValue = other; useEffect(() => {}, [setValue]);',

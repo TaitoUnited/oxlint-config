@@ -42,7 +42,7 @@ export function requireBlankLineBetween({
 
   const gap = sourceCode.text.slice(endAnchor.range[1], startAnchor.range[0]);
 
-  // The global no-extra-empty-lines rule owns excessive padding. This rule
+  // The global readability-padding-no-extra-empty-lines rule owns excessive padding. This rule
   // only reports a missing blank line, avoiding duplicate diagnostics.
   if (!isWhitespaceOnly(gap) || countLineBreaks(gap) >= 2) {
     return;
