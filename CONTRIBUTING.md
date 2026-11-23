@@ -34,7 +34,7 @@ test/
   presets.test.js        Runs the real Oxlint CLI against fixtures through the presets
   plugin.test.js         Rule registry, unit test and documentation drift checks
 docs/<preset>.md         Preset docs: built-in rule highlights and custom rules
-                         with Bad/Good examples (graphql.md for GraphQL rules)
+                         with Bad/Good examples
 docs/ideas.md            Candidate rules that are not implemented yet
 docs/releasing.md        How to publish a new version
 ```

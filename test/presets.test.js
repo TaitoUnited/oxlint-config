@@ -309,6 +309,48 @@ export default defineConfig({
   });
 });
 
+describe('base + graphql', () => {
+  it('enables the GraphQL client and server rules', () => {
+    expectCases({
+      config: `
+import { defineConfig } from 'oxlint';
+import base from '@taito/oxlint-config';
+import graphql from '@taito/oxlint-config/graphql';
+
+export default defineConfig({
+  extends: [base, graphql],
+  env: base.env,
+});`,
+      cases: [
+        {
+          code: 'taito(graphql-no-typename-selection)',
+          valid:
+            'declare function graphql(document: string): unknown;\n\nexport const query = graphql(`query User { user { id } }`);',
+          invalid:
+            'declare function graphql(document: string): unknown;\n\nexport const query = graphql(`query User { user { __typename id } }`);',
+        },
+        {
+          code: 'taito(graphql-mutation-returns-entity)',
+          name: 'user',
+          extension: 'resolver.ts',
+          valid:
+            "declare const builder: any;\ndeclare const User: unknown;\n\nbuilder.mutationField('renameUser', (t: any) => t.field({ type: User, resolve: () => null }));",
+          invalid:
+            "declare const builder: any;\n\nbuilder.mutationField('renameUser', (t: any) => t.field({ type: 'Boolean', resolve: () => true }));",
+        },
+        {
+          code: 'taito(graphql-no-description)',
+          name: 'user-type',
+          valid:
+            'declare const builder: any;\ndeclare const User: unknown;\n\nbuilder.objectType(User, { fields: () => ({}) });',
+          invalid:
+            "declare const builder: any;\ndeclare const User: unknown;\n\nbuilder.objectType(User, { description: 'A user.', fields: () => ({}) });",
+        },
+      ],
+    });
+  });
+});
+
 describe('opt-in rules', () => {
   it('can be enabled with project-specific options', () => {
     expectCases({
@@ -321,7 +363,6 @@ export default defineConfig({
   rules: {
     'taito/react-no-redundant-stack': ['error', { stackModules: ['~/ui/stack'] }],
     'taito/no-ssr-guards': 'error',
-    'taito/graphql-no-typename-selection': 'error',
   },
 });`,
       cases: [
@@ -338,13 +379,6 @@ export default defineConfig({
           valid: 'export const width = window.innerWidth;',
           invalid:
             "export const width = typeof window === 'undefined' ? 0 : window.innerWidth;",
-        },
-        {
-          code: 'taito(graphql-no-typename-selection)',
-          valid:
-            'declare function graphql(document: string): unknown;\n\nexport const query = graphql(`query User { user { id } }`);',
-          invalid:
-            'declare function graphql(document: string): unknown;\n\nexport const query = graphql(`query User { user { __typename id } }`);',
         },
       ],
     });

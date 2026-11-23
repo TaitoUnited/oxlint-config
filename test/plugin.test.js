@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 
 import base from '../configs/base.js';
+import graphql from '../configs/graphql.js';
 import lingui from '../configs/lingui.js';
 import node from '../configs/node.js';
 import panda from '../configs/panda.js';
@@ -12,7 +13,16 @@ import react from '../configs/react.js';
 import vitest from '../configs/vitest.js';
 import plugin, { rules } from '../plugin/index.js';
 
-const presets = { base, node, react, vitest, playwright, lingui, panda };
+const presets = {
+  base,
+  node,
+  react,
+  vitest,
+  playwright,
+  lingui,
+  panda,
+  graphql,
+};
 
 const ruleDirectories = readdirSync(
   fileURLToPath(new URL('../plugin/rules', import.meta.url))

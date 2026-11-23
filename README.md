@@ -11,7 +11,7 @@
 </div>
 
 - 📐 **Strict, type-aware defaults.** More than 360 built-in Oxlint rules across the `eslint`, `typescript`, `unicorn`, `import`, `oxc` and `promise` plugins, with type-aware rules turned on.
-- 🧩 **Composable presets.** Combine a base preset with presets for Node.js, React, Vitest, Playwright, Lingui and Panda CSS.
+- 🧩 **Composable presets.** Combine a base preset with presets for Node.js, React, Vitest, Playwright, Lingui, Panda CSS and GraphQL.
 - 🛠 **Custom rules.** The `taito` plugin ships 26 rules for readable spacing, safer function signatures, React effects and common project conventions. See the [preset docs](#presets).
 
 ## Installation
@@ -64,10 +64,9 @@ npx oxlint --fix
 | `@taito/oxlint-config/playwright` | Playwright end-to-end test packages.                                                                         | [Playwright](docs/playwright.md) |
 | `@taito/oxlint-config/lingui`     | React apps localized with Lingui. Extend it **after** `react`.                                               | [Lingui](docs/lingui.md)         |
 | `@taito/oxlint-config/panda`      | Projects styled with Panda CSS.                                                                              | [Panda CSS](docs/panda.md)       |
+| `@taito/oxlint-config/graphql`    | GraphQL clients that use Apollo Client and servers that use Pothos.                                          | [GraphQL](docs/graphql.md)       |
 
-Each preset's docs list the built-in rules it enables and explain its custom `taito/*` rules with **Bad** and **Good** examples. Opt-in rules, which depend on a project's architecture, are documented with the preset they relate to, and the GraphQL rules in [GraphQL](docs/graphql.md).
-
-The ESLint plugins that the presets use are regular dependencies of this package, pinned to the versions it is tested with, so there is nothing else to install.
+Each preset's docs list the built-in rules it enables and explain its custom `taito/*` rules with **Bad** and **Good** examples. Opt-in rules, which depend on a project's architecture, are documented with the preset they relate to.
 
 ### Server
 

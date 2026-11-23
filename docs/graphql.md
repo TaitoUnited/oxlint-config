@@ -1,16 +1,27 @@
-# GraphQL rules
+# GraphQL preset
 
-Opt-in rules for GraphQL clients that use [Apollo Client](https://www.apollographql.com/docs/react) and servers that build their schema with [Pothos](https://pothos-graphql.dev). No preset enables them. Enable the ones that match your stack:
+`@taito/oxlint-config/graphql` is for GraphQL clients that use [Apollo Client](https://www.apollographql.com/docs/react) and servers that build their schema with [Pothos](https://pothos-graphql.dev). It only enables custom rules. The client rule only checks `graphql(...)` documents and the server rules only check Pothos `builder` calls, so the same preset works in both packages.
+
+```ts
+import base from '@taito/oxlint-config';
+import graphql from '@taito/oxlint-config/graphql';
+import { defineConfig } from 'oxlint';
+
+export default defineConfig({
+  extends: [base, graphql],
+  env: base.env,
+});
+```
+
+`graphql-no-description` assumes an internal API, where code comments document the schema. For a public API, turn it off:
 
 ```ts
 rules: {
-  // Client
-  'taito/graphql-no-typename-selection': 'error',
-  // Server
-  'taito/graphql-mutation-returns-entity': 'error',
-  'taito/graphql-no-description': 'error',
+  'taito/graphql-no-description': 'off',
 }
 ```
+
+## Custom rules
 
 | Rule                                                                       | Side   | Fix |
 | -------------------------------------------------------------------------- | ------ | --- |

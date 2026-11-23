@@ -55,6 +55,10 @@
       "types": "./configs/index.d.ts",
       "default": "./configs/panda.js"
     },
+    "./graphql": {
+      "types": "./configs/index.d.ts",
+      "default": "./configs/graphql.js"
+    },
     "./plugin": {
       "types": "./plugin/index.d.ts",
       "default": "./plugin/index.js"

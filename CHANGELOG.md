@@ -8,7 +8,7 @@ All notable changes to this package are documented here. The format follows [Kee
 
 ### Added
 
-- Presets: base, `node`, `react`, `vitest`, `playwright`, `lingui` and `panda`.
+- Presets: base, `node`, `react`, `vitest`, `playwright`, `lingui`, `panda` and `graphql`.
 - The `taito` JS plugin with 26 custom rules. See the [docs](docs).
 
 [Unreleased]: https://github.com/TaitoUnited/oxlint-config/compare/v0.1.0...HEAD
