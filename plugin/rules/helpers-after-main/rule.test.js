@@ -83,3 +83,82 @@ ruleTester.run('helpers-after-main', rule, {
     },
   ],
 });
+
+ruleTester.run('helpers-after-main with other module shapes', rule, {
+  valid: [
+    {
+      code: 'export class UserService { save() { return validate(); } } function validate() {}',
+      filename: 'src/user/user.service.ts',
+    },
+    {
+      code: 'function getUser() {} export const userService = { getUser } satisfies Service; function validate() {}',
+      filename: 'src/user/user.service.ts',
+    },
+    {
+      code: "describe('user', () => {}); function createUser() {}",
+      filename: 'src/user/user.spec.ts',
+    },
+  ],
+  invalid: [
+    {
+      code: 'function validate() {} export class UserService { save() { return validate(); } }',
+      filename: 'src/user/user.service.ts',
+      errors: [
+        {
+          message:
+            'Move "validate" below `UserService`. Private helpers follow the main export, so the file reads from its public API down.',
+        },
+      ],
+    },
+    {
+      code: 'function validate() {} export const userService = { getUser } as const;',
+      filename: 'src/user/user.service.ts',
+      errors: [{ messageId: 'privateHelperBeforeExport' }],
+    },
+    {
+      code: "function createUser() {} describe('user', () => {});",
+      filename: 'src/user/user.spec.ts',
+      errors: [{ messageId: 'testHelperBeforeTests' }],
+    },
+  ],
+});
+
+ruleTester.run('helpers-after-main with options', rule, {
+  valid: [
+    {
+      // Not a module file once the pattern is replaced.
+      code: 'function validate() {} export const userService = {};',
+      filename: 'src/user/user.service.ts',
+      options: [{ moduleFilePattern: String.raw`\.repository\.ts$` }],
+    },
+    {
+      code: "function createUser() {} describe('user', () => {});",
+      filename: 'src/user/user.spec.ts',
+      options: [{ testFilePattern: String.raw`\.test\.` }],
+    },
+  ],
+  invalid: [
+    {
+      code: 'function toRow() {} export const userRepository = {};',
+      filename: 'src/user/user.repository.ts',
+      options: [
+        {
+          moduleFilePattern: String.raw`\.repository\.ts$`,
+          mainExportPattern: String.raw`Repository$`,
+        },
+      ],
+      errors: [
+        {
+          messageId: 'privateHelperBeforeExport',
+          data: { name: 'toRow', exportName: 'userRepository' },
+        },
+      ],
+    },
+    {
+      code: "function createUser() {} test('saves', () => {});",
+      filename: 'src/user/__tests__/user.ts',
+      options: [{ testFilePattern: String.raw`/__tests__/` }],
+      errors: [{ messageId: 'testHelperBeforeTests' }],
+    },
+  ],
+});

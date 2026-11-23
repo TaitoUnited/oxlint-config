@@ -21,7 +21,7 @@ npm install --save-dev @taito/oxlint-config oxlint tsrs
 ```
 
 > [!IMPORTANT]
-> Requires Node.js 26 or newer and Oxlint 1.94 or newer.
+> Requires Node.js 22.18 or newer and Oxlint 1.94 or newer. Node.js 22.18 is the first 22.x release that loads `oxlint.config.ts` with built-in type stripping.
 
 - [oxlint](https://oxc.rs/docs/guide/usage/linter.html) is a fast linter for JS/TS projects.
 - [tsrs](https://github.com/oxc-project/tsrs) is the backend for type-aware rules (`typescript/no-floating-promises`, `typescript/no-unsafe-*`, ...).
@@ -131,7 +131,10 @@ export default defineConfig({
     // Opt-in Taito rules with project-specific options.
     'taito/helpers-after-main': [
       'error',
-      { serviceFilePattern: String.raw`\.(service|repository)\.ts$` },
+      {
+        moduleFilePattern: String.raw`\.(service|repository)\.ts$`,
+        mainExportPattern: String.raw`(Service|Repository)$`,
+      },
     ],
   },
   overrides: [

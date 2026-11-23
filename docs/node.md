@@ -35,10 +35,22 @@ rules: {
 
 ### `taito/helpers-after-main`
 
-Orders a file top-down from its public behavior:
+Orders a file top-down from its public behavior. Function declarations are hoisted, so helpers can come last:
 
-- In test files (`*.test.*`), helper function declarations come after the tests.
-- In service and DAO files (`*.service.ts`, `*.dao.ts`), private helpers come after the exported `xService` or `xDao` object.
+- In test files, helper function declarations come after the tests.
+- In modules with a main export, such as services, private helpers come after that export. The main export is an exported object (`export const userService = { ... }`) or class (`export class UserService`) whose name matches `mainExportPattern`. Functions listed as members of the object are public and may come before it.
+
+The defaults follow the Taito full-stack template (`*.service.ts` and `*.dao.ts` files exporting `xService` or `xDao`). Configure the options for other layouts, for example repositories:
+
+```ts
+'taito/helpers-after-main': [
+  'error',
+  {
+    moduleFilePattern: String.raw`\.(service|repository)\.ts$`,
+    mainExportPattern: String.raw`(Service|Repository)$`,
+  },
+],
+```
 
 <!-- filename: src/user/user.service.ts -->
 
@@ -78,6 +90,8 @@ async function assertUniqueEmail(email: string) {
 }
 ```
 
-| Option               | Default                         | Description                                   |
-| -------------------- | ------------------------------- | --------------------------------------------- |
-| `serviceFilePattern` | `\.(service\|dao)\.[cm]?[jt]s$` | Basename pattern for service and DAO modules. |
+| Option              | Default                         | Description                                                                                              |
+| ------------------- | ------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| `testFilePattern`   | `\.(test\|spec)\.[^/]+$`        | File path pattern for test files. To also cover test folders, use `\.(test\|spec)\.[^/]+$\|/__tests__/`. |
+| `moduleFilePattern` | `\.(service\|dao)\.[cm]?[jt]s$` | File path pattern for modules with a main export.                                                        |
+| `mainExportPattern` | `(Service\|Dao)$`               | Name pattern for the main exported object or class.                                                      |

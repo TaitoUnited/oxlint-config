@@ -1,4 +1,4 @@
-import { basename, posix } from 'node:path';
+import { posix } from 'node:path';
 
 export function createPlugin({ name, version, rules }) {
   return {
@@ -97,25 +97,6 @@ export function isNamedImport({ variable, source, importedName }) {
     );
   });
 }
-
-const defaultServiceFilePattern = String.raw`\.(service|dao)\.[cm]?[jt]s$`;
-
-/** Whether the file is a service or DAO module, e.g. `user.service.ts`. */
-export function isServiceOrDaoFile(
-  filename,
-  pattern = defaultServiceFilePattern
-) {
-  return new RegExp(pattern).test(basename(filename));
-}
-
-export const serviceFilePatternSchema = {
-  type: 'object',
-  properties: {
-    // Regex matched against the file basename to detect service/DAO modules.
-    serviceFilePattern: { type: 'string' },
-  },
-  additionalProperties: false,
-};
 
 export function isInternalModule(target) {
   if (!target) {

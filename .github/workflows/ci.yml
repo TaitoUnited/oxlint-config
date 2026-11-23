@@ -15,7 +15,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node: [26]
+        # The minimum supported version and the newer LTS lines. 26 is the repository's own version (.nvmrc).
+        node: ['22.18.0', 24, 26]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
