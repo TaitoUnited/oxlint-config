@@ -441,6 +441,7 @@ const config = {
     'taito/readability-padding-no-extra-empty-lines': 'error',
     'taito/no-object-parameters': 'error',
     'taito/no-positional-func-args': 'error',
+    'taito/no-redundant-calc': 'error',
     'taito/readability-padding-around-control-flow': 'error',
     'taito/readability-padding-around-function': 'error',
     'taito/readability-padding-around-multiline-statement': 'error',

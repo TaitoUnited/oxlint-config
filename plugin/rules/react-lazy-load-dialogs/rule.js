@@ -9,7 +9,7 @@ export const rule = createRule({
     type: 'suggestion',
     docs: {
       description:
-        'Require application dialogs to be lazy-loaded with `loadable` instead of imported statically.',
+        'Require application dialogs to be lazy-loaded with `loadable` or React `lazy` instead of imported statically.',
     },
     schema: [
       {
@@ -18,15 +18,17 @@ export const rule = createRule({
           // Regex matched against the resolved import path. Matching modules
           // (for example the UI kit's own dialog primitives) may be imported statically.
           ignorePattern: { type: 'string' },
+          // Lazy-loading API that the messages suggest.
+          loader: { enum: ['loadable', 'lazy'] },
         },
         additionalProperties: false,
       },
     ],
     messages: {
       staticDialogImport:
-        'Lazy-load "{{name}}" with `loadable(() => import("{{source}}").then(mod => mod.{{name}}))` and preload it on user interaction. Dialogs are not initially visible and should stay out of the importing bundle.',
+        'Lazy-load "{{name}}" with `{{example}}` and preload it on user interaction. Dialogs are not initially visible and should stay out of the importing bundle.',
       staticDefaultDialogImport:
-        'Lazy-load "{{name}}" with `loadable(() => import("{{source}}"))` and preload it on user interaction. Dialogs are not initially visible and should stay out of the importing bundle.',
+        'Lazy-load "{{name}}" with `{{example}}` and preload it on user interaction. Dialogs are not initially visible and should stay out of the importing bundle.',
     },
   },
 
@@ -36,6 +38,8 @@ export const rule = createRule({
     const ignorePattern = new RegExp(
       context.options[0]?.ignorePattern ?? defaultIgnorePattern
     );
+
+    const loader = context.options[0]?.loader ?? 'loadable';
 
     // Tests and stories render dialogs directly by design.
     if (/\.(test|stories)\.[cm]?[jt]sx?$/.test(filename)) {
@@ -64,19 +68,37 @@ export const rule = createRule({
             continue;
           }
 
+          const isDefault = specifier.type === 'ImportDefaultSpecifier';
+
           context.report({
             node: specifier,
-            messageId:
-              specifier.type === 'ImportDefaultSpecifier'
-                ? 'staticDefaultDialogImport'
-                : 'staticDialogImport',
-            data: { name, source },
+            messageId: isDefault
+              ? 'staticDefaultDialogImport'
+              : 'staticDialogImport',
+            data: {
+              name,
+              example: getLazyLoadExample({ loader, name, source, isDefault }),
+            },
           });
         }
       },
     };
   },
 });
+
+function getLazyLoadExample({ loader, name, source, isDefault }) {
+  const load = `import("${source}")`;
+
+  if (loader === 'lazy') {
+    return isDefault
+      ? `lazy(() => ${load})`
+      : `lazy(() => ${load}.then(mod => ({ default: mod.${name} })))`;
+  }
+
+  return isDefault
+    ? `loadable(() => ${load})`
+    : `loadable(() => ${load}.then(mod => mod.${name}))`;
+}
 
 function isApplicationModule({ filename, source, ignorePattern }) {
   if (!isInternalModule(source)) {

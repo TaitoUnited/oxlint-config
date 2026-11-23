@@ -10,8 +10,11 @@ import { taitoPlugin } from './utils.js';
 const config = {
   jsPlugins: [taitoPlugin],
   rules: {
+    'taito/panda-no-border-box': 'error',
     'taito/panda-no-pointer-cursor': 'error',
-    'taito/panda-style-conventions': 'error',
+    'taito/panda-no-token-css-variables': 'error',
+    'taito/panda-prefer-combined-properties': 'error',
+    'taito/panda-prefer-text-style': 'error',
   },
 };
 

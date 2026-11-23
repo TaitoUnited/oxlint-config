@@ -8,9 +8,13 @@ import { rule as noChainedTypeAssertions } from './rules/no-chained-type-asserti
 import { rule as noInternalTestMocks } from './rules/no-internal-test-mocks/rule.js';
 import { rule as noObjectParameters } from './rules/no-object-parameters/rule.js';
 import { rule as noPositionalFuncArgs } from './rules/no-positional-func-args/rule.js';
+import { rule as noRedundantCalc } from './rules/no-redundant-calc/rule.js';
 import { rule as noSsrGuards } from './rules/no-ssr-guards/rule.js';
+import { rule as pandaNoBorderBox } from './rules/panda-no-border-box/rule.js';
 import { rule as pandaNoPointerCursor } from './rules/panda-no-pointer-cursor/rule.js';
-import { rule as pandaStyleConventions } from './rules/panda-style-conventions/rule.js';
+import { rule as pandaNoTokenCssVariables } from './rules/panda-no-token-css-variables/rule.js';
+import { rule as pandaPreferCombinedProperties } from './rules/panda-prefer-combined-properties/rule.js';
+import { rule as pandaPreferTextStyle } from './rules/panda-prefer-text-style/rule.js';
 import { rule as reactLazyLoadDialogs } from './rules/react-lazy-load-dialogs/rule.js';
 import { rule as reactNoFunctionDepsInEffect } from './rules/react-no-function-deps-in-effect/rule.js';
 import { rule as reactNoRedundantStack } from './rules/react-no-redundant-stack/rule.js';
@@ -33,9 +37,13 @@ export const rules = {
   'no-internal-test-mocks': noInternalTestMocks,
   'no-object-parameters': noObjectParameters,
   'no-positional-func-args': noPositionalFuncArgs,
+  'no-redundant-calc': noRedundantCalc,
   'no-ssr-guards': noSsrGuards,
+  'panda-no-border-box': pandaNoBorderBox,
   'panda-no-pointer-cursor': pandaNoPointerCursor,
-  'panda-style-conventions': pandaStyleConventions,
+  'panda-no-token-css-variables': pandaNoTokenCssVariables,
+  'panda-prefer-combined-properties': pandaPreferCombinedProperties,
+  'panda-prefer-text-style': pandaPreferTextStyle,
   'react-lazy-load-dialogs': reactLazyLoadDialogs,
   'react-no-function-deps-in-effect': reactNoFunctionDepsInEffect,
   'react-no-redundant-stack': reactNoRedundantStack,

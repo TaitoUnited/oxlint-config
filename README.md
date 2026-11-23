@@ -1,10 +1,18 @@
-# @taito/oxlint-config
+<p align='center'>
+  <img src="assets/taito-oxlint-config.png" alt="Taito oxlint config hero image"/>
+<p/>
 
-Shared [Oxlint](https://oxc.rs/docs/guide/usage/linter) configuration and custom lint rules for Taito United's JavaScript and TypeScript projects.
+<div align="center" >
+  &middot;
+  <i>Shared oxlint configuration and custom lint rules for Taito United's JS/TS projects</i>
+  &middot;
+  <br/>
+  <br/>
+</div>
 
-- **Strict, type-aware defaults.** More than 360 built-in Oxlint rules across the `eslint`, `typescript`, `unicorn`, `import`, `oxc` and `promise` plugins, with type-aware rules turned on.
-- **Composable presets.** Combine a base preset with presets for Node.js, React, Vitest, Playwright, Lingui and Panda CSS.
-- **Custom rules.** The `taito` plugin ships 22 rules for readable spacing, safer function signatures, React effects and common project conventions. See the [rule reference](docs/rules.md).
+- 📐 **Strict, type-aware defaults.** More than 360 built-in Oxlint rules across the `eslint`, `typescript`, `unicorn`, `import`, `oxc` and `promise` plugins, with type-aware rules turned on.
+- 🧩 **Composable presets.** Combine a base preset with presets for Node.js, React, Vitest, Playwright, Lingui and Panda CSS.
+- 🛠 **Custom rules.** The `taito` plugin ships 26 rules for readable spacing, safer function signatures, React effects and common project conventions. See the [rule reference](docs/rules.md).
 
 ## Installation
 
@@ -12,9 +20,11 @@ Shared [Oxlint](https://oxc.rs/docs/guide/usage/linter) configuration and custom
 npm install --save-dev @taito/oxlint-config oxlint tsrs
 ```
 
-`tsrs` is the backend for type-aware rules (`typescript/no-floating-promises`, `typescript/no-unsafe-*`, ...). Oxlint finds the nearest `tsconfig.json` for each file.
+> [!IMPORTANT]
+> Requires Node.js 26 or newer and Oxlint 1.94 or newer.
 
-Requirements: Node.js 26 or newer and Oxlint 1.94 or newer. Oxlint loads `oxlint.config.ts` with Node's built-in type stripping.
+- [oxlint](https://oxc.rs/docs/guide/usage/linter.html) is a fast linter for JS/TS projects.
+- [tsrs](https://github.com/oxc-project/tsrs) is the backend for type-aware rules (`typescript/no-floating-promises`, `typescript/no-unsafe-*`, ...).
 
 > [!WARNING]
 > The `react` preset does not work with TypeScript 7 yet. Its [ESLint React](https://eslint-react.xyz) plugins depend on `@typescript-eslint`, which supports TypeScript 6.0 at most, and Oxlint fails to load them in a project that has TypeScript 7 installed. Keep React projects on TypeScript 6 until ESLint React supports TypeScript 7. The other presets work with TypeScript 7.
@@ -169,7 +179,7 @@ Read [`configs/`](configs) for the full list. Each preset is a plain JavaScript 
 
 ### Custom rules
 
-See the [rule reference](docs/rules.md) for all 22 `taito/*` rules, their options and the preset that enables each one. Rules that depend on a project's architecture are opt-in. They default to the conventions of the [Taito full-stack template](https://github.com/TaitoUnited/full-stack-template).
+See the [rule reference](docs/rules.md) for all 26 `taito/*` rules, their options and the preset that enables each one. Rules that depend on a project's architecture are opt-in. They default to the conventions of the [Taito full-stack template](https://github.com/TaitoUnited/full-stack-template).
 
 ## Editor integration
 

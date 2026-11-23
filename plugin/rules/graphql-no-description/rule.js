@@ -1,4 +1,9 @@
-import { createRule, getSourceCode, isFunction } from '../../utils/utils.js';
+import {
+  createRule,
+  getPropertyRemovalRange,
+  getSourceCode,
+  isFunction,
+} from '../../utils/utils.js';
 
 export const rule = createRule({
   meta: {
@@ -30,7 +35,8 @@ export const rule = createRule({
         context.report({
           node,
           messageId: 'noDescription',
-          fix: fixer => fixer.removeRange(getRemovalRange(sourceCode, node)),
+          fix: fixer =>
+            fixer.removeRange(getPropertyRemovalRange({ sourceCode, node })),
         });
       },
     };
@@ -161,23 +167,4 @@ function findParameterOwner({ node, name }) {
       return { fn: current, params: current.params, binding };
     }
   }
-}
-
-function getRemovalRange(sourceCode, node) {
-  const previous = sourceCode.getTokenBefore(node, { includeComments: true });
-  const next = sourceCode.getTokenAfter(node);
-
-  // Removing the newline after a line comment would comment out the code after it.
-  if (previous.type === 'Line') {
-    return [node.range[0], next?.value === ',' ? next.range[1] : node.range[1]];
-  }
-
-  if (next?.value === ',') {
-    return [previous.range[1], next.range[1]];
-  }
-
-  // The last property has no trailing comma, so drop the separator before it.
-  return previous.value === ','
-    ? [previous.range[0], node.range[1]]
-    : [previous.range[1], node.range[1]];
 }

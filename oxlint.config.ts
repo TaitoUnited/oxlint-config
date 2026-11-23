@@ -39,5 +39,12 @@ export default defineConfig({
         ],
       },
     },
+    {
+      // Rule tests and preset fixtures contain invalid code on purpose.
+      files: ['test/**', '**/*.test.js'],
+      rules: {
+        'taito/no-redundant-calc': 'off',
+      },
+    },
   ],
 });

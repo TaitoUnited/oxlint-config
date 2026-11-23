@@ -11,6 +11,7 @@ All custom rules live in the `taito` JS plugin that ships with this package. Eve
 | [`readability-padding-no-extra-empty-lines`](#taitoreadability-padding-no-extra-empty-lines)                     | base   | ✓   |
 | [`no-object-parameters`](#taitono-object-parameters)                                                             | base   |     |
 | [`no-positional-func-args`](#taitono-positional-func-args)                                                       | base   |     |
+| [`no-redundant-calc`](#taitono-redundant-calc)                                                                   | base   |     |
 | [`readability-padding-around-control-flow`](#taitoreadability-padding-around-control-flow)                       | base   | ✓   |
 | [`readability-padding-around-function`](#taitoreadability-padding-around-function)                               | base   | ✓   |
 | [`readability-padding-around-multiline-statement`](#taitoreadability-padding-around-multiline-statement)         | base   | ✓   |
@@ -20,7 +21,10 @@ All custom rules live in the `taito` JS plugin that ships with this package. Eve
 | [`readability-padding-between-jsx-siblings`](#taitoreadability-padding-between-jsx-siblings)                     | react  | ✓   |
 | [`lingui-no-module-scope-trans`](#taitolingui-no-module-scope-trans)                                             | lingui |     |
 | [`panda-no-pointer-cursor`](#taitopanda-no-pointer-cursor)                                                       | panda  |     |
-| [`panda-style-conventions`](#taitopanda-style-conventions)                                                       | panda  |     |
+| [`panda-no-token-css-variables`](#taitopanda-no-token-css-variables)                                             | panda  |     |
+| [`panda-no-border-box`](#taitopanda-no-border-box)                                                               | panda  |     |
+| [`panda-prefer-combined-properties`](#taitopanda-prefer-combined-properties)                                     | panda  | ✓   |
+| [`panda-prefer-text-style`](#taitopanda-prefer-text-style)                                                       | panda  |     |
 | [`react-lazy-load-dialogs`](#taitoreact-lazy-load-dialogs)                                                       | opt-in |     |
 | [`react-no-redundant-stack`](#taitoreact-no-redundant-stack)                                                     | opt-in |     |
 | [`no-ssr-guards`](#taitono-ssr-guards)                                                                           | opt-in |     |
@@ -101,6 +105,10 @@ function rename(from: string, to: string) {} // ✗
 function rename({ from, to }: { from: string; to: string }) {} // ✓
 ```
 
+### `taito/no-redundant-calc`
+
+Disallows `calc()` around a single value that has no arithmetic operator, such as `calc(var(--panel-width))` or `calc(-1px)`. It checks every string and template literal, so it covers inline styles, CSS-in-JS libraries and CSS strings as well as Panda styles.
+
 ### `taito/readability-padding-around-control-flow`
 
 Requires exactly one blank line before and after multiline `if`, `for`, `while`, `do`, `switch` and `try` statements.
@@ -151,28 +159,80 @@ Disallows `<Trans>` from `@lingui/react/macro` outside a function. Module-scope 
 
 Disallows `cursor: 'pointer'` inside Panda `css`, `cva`, `sva` and `styled` calls. Only links show a pointer cursor. Buttons and other controls keep the default cursor.
 
-### `taito/panda-style-conventions`
+### `taito/panda-no-token-css-variables`
 
-- Reference tokens with Panda syntax (`{colors.text}`, `token.var(...)`), not generated CSS variables (`var(--colors-text)`).
-- Use the `$truncate: true` utility instead of `textOverflow: 'ellipsis'`.
-- Do not set `boxSizing: 'border-box'`, because global styles already apply it.
-- Remove `calc()` around a single value that has no arithmetic operator.
+Disallows Panda's generated token CSS variables (`var(--colors-text)`, `var(--spacing-md)`) in strings. Reference tokens with Panda syntax (`{colors.text}`) or `token.var('colors.text')`, so that renamed or removed tokens fail the Panda build.
 
-The first and second checks assume the project defines the `$truncate` utility and a global `border-box` reset, as in the Taito full-stack template.
+### `taito/panda-no-border-box`
 
-| Option                | Default                    | Description                                                               |
-| --------------------- | -------------------------- | ------------------------------------------------------------------------- |
-| `designSystemPattern` | `(^\|/)src/design-system/` | Files that define the design system itself. The utility checks skip them. |
+Disallows `boxSizing: 'border-box'` inside Panda `css`, `cva`, `sva` and `styled` calls. It assumes a global `border-box` reset, as in the Taito full-stack template.
+
+| Option                | Default                    | Description                                                                        |
+| --------------------- | -------------------------- | ---------------------------------------------------------------------------------- |
+| `designSystemPattern` | `(^\|/)src/design-system/` | Files that define the design system itself, such as the global reset. Not checked. |
+
+### `taito/panda-prefer-combined-properties`
+
+Requires one combined property when per-side properties in the same Panda style object have the same value. Fixable.
+
+| Properties with the same value                                                          | Combined into                           |
+| --------------------------------------------------------------------------------------- | --------------------------------------- |
+| `width` and `height` (`w`, `h`)                                                         | `boxSize`                               |
+| `paddingTop` and `paddingBottom` (`pt`, `pb`, `paddingBlockStart`, `paddingBlockEnd`)   | `paddingBlock`                          |
+| `paddingLeft` and `paddingRight` (`pl`, `pr`, `paddingInlineStart`, `paddingInlineEnd`) | `paddingInline`                         |
+| All four `padding*` sides                                                               | `padding`                               |
+| The same for `margin*`                                                                  | `marginBlock`, `marginInline`, `margin` |
+
+```ts
+// Before
+const icon = css({
+  width: '10px',
+  height: '10px',
+  paddingTop: '$md',
+  paddingBottom: '$md',
+});
+
+// After
+const icon = css({ boxSize: '10px', paddingBlock: '$md' });
+```
+
+Only literal strings, numbers and tokens such as `'{sizes.4}'` are compared. The rule skips objects that contain a spread, values that are variables or responsive objects, and properties whose sides another property in the object also sets (for example `padding` together with `paddingTop` and `paddingBottom`), because combining them could change which value wins.
+
+### `taito/panda-prefer-text-style`
+
+Disallows `fontSize` in Panda styles. Use a [`textStyle`](https://panda-css.com/docs/theming/text-styles) instead, so that text follows the project's typography scale. Values relative to the surrounding text (`inherit`, `0.9em`, `90%`, `smaller`) are allowed.
+
+| Option                | Default                    | Description                                                                                        |
+| --------------------- | -------------------------- | -------------------------------------------------------------------------------------------------- |
+| `properties`          | `['fontSize']`             | Typography properties to report. Add `lineHeight`, `fontWeight` or `letterSpacing` to be stricter. |
+| `designSystemPattern` | `(^\|/)src/design-system/` | Files that define the design system itself, such as the text styles. Not checked.                  |
 
 ## Opt-in rules
 
 ### `taito/react-lazy-load-dialogs`
 
-Requires components whose name ends in `Dialog` to be lazy-loaded with `loadable(() => import(...))` when they are imported from application modules (`./`, `../`, `@/`, `~/`). Dialogs are not visible at first, so they should stay out of the importing bundle. Tests and stories are ignored.
+Requires components whose name ends in `Dialog` to be lazy-loaded with [`loadable`](https://loadable-components.com) or React [`lazy`](https://react.dev/reference/react/lazy) when they are imported from application modules (`./`, `../`, `@/`, `~/`). Dialogs are not visible at first, so they should stay out of the importing bundle. Tests and stories are ignored.
+
+The rule reports static imports. The `loader` option only selects which API the message suggests:
+
+```ts
+// loader: 'loadable' (default)
+const EditDialog = loadable(() =>
+  import('./edit-dialog').then(mod => mod.EditDialog)
+);
+
+// loader: 'lazy'. Render the dialog inside <Suspense>.
+const EditDialog = lazy(() =>
+  import('./edit-dialog').then(mod => ({ default: mod.EditDialog }))
+);
+```
+
+With `lazy`, preload a dialog on user interaction by calling the same `import()` early, for example on hover.
 
 | Option          | Default                         | Description                                                                                    |
 | --------------- | ------------------------------- | ---------------------------------------------------------------------------------------------- |
 | `ignorePattern` | `(^\|/)src/components/ui(/\|$)` | Resolved import paths that may be imported statically, such as the UI kit's dialog primitives. |
+| `loader`        | `'loadable'`                    | `'loadable'` or `'lazy'`: the lazy-loading API that the messages suggest.                      |
 
 ### `taito/react-no-redundant-stack`
 

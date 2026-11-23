@@ -78,3 +78,48 @@ ruleTester.run('react-lazy-load-dialogs with ignorePattern', rule, {
     },
   ],
 });
+
+ruleTester.run('react-lazy-load-dialogs with React lazy', rule, {
+  valid: [
+    {
+      code: 'import { lazy } from "react"; const MeetingEditDialog = lazy(() => import("./meeting-dialog-edit").then(mod => ({ default: mod.MeetingEditDialog })));',
+      filename,
+      options: [{ loader: 'lazy' }],
+    },
+  ],
+  invalid: [
+    {
+      code: 'import { MeetingEditDialog } from "./meeting-dialog-edit";',
+      filename,
+      options: [{ loader: 'lazy' }],
+      errors: [
+        {
+          message:
+            'Lazy-load "MeetingEditDialog" with `lazy(() => import("./meeting-dialog-edit").then(mod => ({ default: mod.MeetingEditDialog })))` and preload it on user interaction. Dialogs are not initially visible and should stay out of the importing bundle.',
+        },
+      ],
+    },
+    {
+      code: 'import FeatureFlagDialog from "@/feature-flags/feature-flag-dialog";',
+      filename,
+      options: [{ loader: 'lazy' }],
+      errors: [
+        {
+          message:
+            'Lazy-load "FeatureFlagDialog" with `lazy(() => import("@/feature-flags/feature-flag-dialog"))` and preload it on user interaction. Dialogs are not initially visible and should stay out of the importing bundle.',
+        },
+      ],
+    },
+    {
+      // loadable stays the default.
+      code: 'import { MeetingEditDialog } from "./meeting-dialog-edit";',
+      filename,
+      errors: [
+        {
+          message:
+            'Lazy-load "MeetingEditDialog" with `loadable(() => import("./meeting-dialog-edit").then(mod => mod.MeetingEditDialog))` and preload it on user interaction. Dialogs are not initially visible and should stay out of the importing bundle.',
+        },
+      ],
+    },
+  ],
+});

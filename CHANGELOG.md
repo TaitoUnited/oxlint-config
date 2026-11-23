@@ -9,7 +9,7 @@ All notable changes to this package are documented here. The format follows [Kee
 ### Added
 
 - Presets: base, `node`, `react`, `vitest`, `playwright`, `lingui` and `panda`.
-- The `taito` JS plugin with 22 custom rules. See [docs/rules.md](docs/rules.md).
+- The `taito` JS plugin with 26 custom rules. See [docs/rules.md](docs/rules.md).
 
 [Unreleased]: https://github.com/TaitoUnited/oxlint-config/compare/v0.1.0...HEAD
 [0.1.0]: https://github.com/TaitoUnited/oxlint-config/releases/tag/v0.1.0

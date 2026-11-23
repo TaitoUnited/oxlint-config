@@ -33,6 +33,7 @@ test/
   presets.test.js        Runs the real Oxlint CLI against fixtures through the presets
   plugin.test.js         Rule registry, unit test and documentation drift checks
 docs/rules.md            Rule reference (one section per rule)
+docs/ideas.md            Candidate rules that are not implemented yet
 ```
 
 The package ships plain ESM JavaScript without a build step. Oxlint loads `oxlint.config.ts` and JS plugins with Node.js, and Node.js does not strip types from files in `node_modules`, so published code must be JavaScript.

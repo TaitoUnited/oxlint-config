@@ -59,6 +59,11 @@ const baseCases = [
       'export function joinNames(first: string, second: string) { return first + second; }',
   },
   {
+    code: 'taito(no-redundant-calc)',
+    valid: "export const width = 'calc(100% - 1px)';",
+    invalid: "export const width = 'calc(100%)';",
+  },
+  {
     code: 'taito(readability-padding-no-extra-empty-lines)',
     valid: 'export const first = 1;\n\nexport const second = 2;',
     invalid: 'export const first = 1;\n\n\nexport const second = 2;',
@@ -238,11 +243,32 @@ export default defineConfig({
             "import { css } from '~/styled-system/css';\n\nexport const button = css({ cursor: 'pointer' });",
         },
         {
-          code: 'taito(panda-style-conventions)',
+          code: 'taito(panda-no-token-css-variables)',
           valid:
-            "import { css } from '~/styled-system/css';\n\nexport const title = css({ $truncate: true });",
+            "import { css } from '~/styled-system/css';\n\nexport const title = css({ color: '{colors.text}' });",
           invalid:
-            "import { css } from '~/styled-system/css';\n\nexport const title = css({ textOverflow: 'ellipsis' });",
+            "import { css } from '~/styled-system/css';\n\nexport const title = css({ color: 'var(--colors-text)' });",
+        },
+        {
+          code: 'taito(panda-no-border-box)',
+          valid:
+            "import { css } from '~/styled-system/css';\n\nexport const title = css({ boxSizing: 'content-box' });",
+          invalid:
+            "import { css } from '~/styled-system/css';\n\nexport const title = css({ boxSizing: 'border-box' });",
+        },
+        {
+          code: 'taito(panda-prefer-combined-properties)',
+          valid:
+            "import { css } from '~/styled-system/css';\n\nexport const icon = css({ boxSize: '4', paddingBlock: '2' });",
+          invalid:
+            "import { css } from '~/styled-system/css';\n\nexport const icon = css({ width: '4', height: '4' });",
+        },
+        {
+          code: 'taito(panda-prefer-text-style)',
+          valid:
+            "import { css } from '~/styled-system/css';\n\nexport const title = css({ textStyle: 'heading' });",
+          invalid:
+            "import { css } from '~/styled-system/css';\n\nexport const title = css({ fontSize: '18px' });",
         },
       ],
     });
