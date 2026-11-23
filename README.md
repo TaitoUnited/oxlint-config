@@ -12,7 +12,7 @@
 
 - 📐 **Strict, type-aware defaults.** More than 360 built-in Oxlint rules across the `eslint`, `typescript`, `unicorn`, `import`, `oxc` and `promise` plugins, with type-aware rules turned on.
 - 🧩 **Composable presets.** Combine a base preset with presets for Node.js, React, Vitest, Playwright, Lingui and Panda CSS.
-- 🛠 **Custom rules.** The `taito` plugin ships 26 rules for readable spacing, safer function signatures, React effects and common project conventions. See the [rule reference](docs/rules.md).
+- 🛠 **Custom rules.** The `taito` plugin ships 26 rules for readable spacing, safer function signatures, React effects and common project conventions. See the [preset docs](#presets).
 
 ## Installation
 
@@ -55,15 +55,17 @@ npx oxlint --fix
 
 ### Presets
 
-| Import                            | Use it for                                                                                                         |
-| --------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| `@taito/oxlint-config`            | Every project. Core, TypeScript (type-aware), `import`, `unicorn`, `oxc`, `promise` and Taito's readability rules. |
-| `@taito/oxlint-config/node`       | Servers, workers and scripts that run on Node.js.                                                                  |
-| `@taito/oxlint-config/react`      | React apps that use React Compiler, including `jsx-a11y` and [ESLint React](https://eslint-react.xyz) rules.       |
-| `@taito/oxlint-config/vitest`     | Projects tested with Vitest.                                                                                       |
-| `@taito/oxlint-config/playwright` | Playwright end-to-end test packages.                                                                               |
-| `@taito/oxlint-config/lingui`     | React apps localized with Lingui. Extend it **after** `react`.                                                     |
-| `@taito/oxlint-config/panda`      | Projects styled with Panda CSS.                                                                                    |
+| Import                            | Use it for                                                                                                   | Docs                             |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------ | -------------------------------- |
+| `@taito/oxlint-config`            | Every project. Core, TypeScript (type-aware), `import`, `unicorn`, `oxc`, `promise` and readability rules.   | [Base](docs/base.md)             |
+| `@taito/oxlint-config/node`       | Servers, workers and scripts that run on Node.js.                                                            | [Node.js](docs/node.md)          |
+| `@taito/oxlint-config/react`      | React apps that use React Compiler, including `jsx-a11y` and [ESLint React](https://eslint-react.xyz) rules. | [React](docs/react.md)           |
+| `@taito/oxlint-config/vitest`     | Projects tested with Vitest.                                                                                 | [Vitest](docs/vitest.md)         |
+| `@taito/oxlint-config/playwright` | Playwright end-to-end test packages.                                                                         | [Playwright](docs/playwright.md) |
+| `@taito/oxlint-config/lingui`     | React apps localized with Lingui. Extend it **after** `react`.                                               | [Lingui](docs/lingui.md)         |
+| `@taito/oxlint-config/panda`      | Projects styled with Panda CSS.                                                                              | [Panda CSS](docs/panda.md)       |
+
+Each preset's docs list the built-in rules it enables and explain its custom `taito/*` rules with **Bad** and **Good** examples. Opt-in rules, which depend on a project's architecture, are documented with the preset they relate to, and the GraphQL rules in [GraphQL](docs/graphql.md).
 
 The ESLint plugins that the presets use are regular dependencies of this package, pinned to the versions it is tested with, so there is nothing else to install.
 
@@ -143,6 +145,20 @@ export default defineConfig({
 });
 ```
 
+Opt-in rules take their defaults from the conventions of the [Taito full-stack template](https://github.com/TaitoUnited/full-stack-template). Regex options are JavaScript regular expression sources written as strings, so use `String.raw` to avoid double escaping. Every preset that uses `taito/*` rules registers the `taito` plugin. Without a preset, register it yourself:
+
+```ts
+export default defineConfig({
+  jsPlugins: [
+    {
+      name: 'taito',
+      specifier: import.meta.resolve('@taito/oxlint-config/plugin'),
+    },
+  ],
+  rules: { 'taito/no-chained-type-assertions': 'error' },
+});
+```
+
 A rule's options are replaced, not merged. For example, if you configure `no-restricted-imports` yourself, include the restrictions from the presets that you want to keep. The React preset exports them as `reactRestrictedImports`:
 
 ```ts
@@ -165,29 +181,13 @@ export default defineConfig({
 });
 ```
 
-## Rules
-
-### Built-in rules
-
-The base preset enables every `correctness` rule plus a curated set of `eslint`, `typescript`, `unicorn`, `import`, `oxc` and `promise` rules. Some highlights:
-
-- Type-aware TypeScript rules: no floating or misused promises, no unsafe `any` flow, `switch` exhaustiveness, `strict-void-return`, `prefer-nullish-coalescing`, `no-unnecessary-condition`.
-- Consistency: `type` instead of `interface`, inline `type` imports, function declarations instead of function expressions (`func-style`), no default exports except in tooling config files and stories, no barrel files.
-- Unused variables, arguments and caught errors may be prefixed with `_`.
-
-Read [`configs/`](configs) for the full list. Each preset is a plain JavaScript object.
-
-### Custom rules
-
-See the [rule reference](docs/rules.md) for all 26 `taito/*` rules, their options and the preset that enables each one. Rules that depend on a project's architecture are opt-in. They default to the conventions of the [Taito full-stack template](https://github.com/TaitoUnited/full-stack-template).
-
 ## Editor integration
 
 Install the [Oxc VS Code extension](https://marketplace.visualstudio.com/items?itemName=oxc.oxc-vscode) (also on Open VSX). It finds `oxlint.config.ts` automatically.
 
 ## Development
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) to add or change rules and run the tests, and [RELEASING.md](RELEASING.md) to publish a new version.
+See [CONTRIBUTING.md](CONTRIBUTING.md) to add or change rules and run the tests, and [docs/releasing.md](docs/releasing.md) to publish a new version.
 
 ## License
 

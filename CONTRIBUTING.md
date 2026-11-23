@@ -15,6 +15,7 @@ npm run verify # lint + format check + tests
 | `npm test` / `test:watch`         | Runs rule unit tests and preset contract tests with Vitest.                          |
 | `npm run verify`                  | Runs everything that CI runs.                                                        |
 | `npm run pack:check`              | Lists the files that `npm publish` would include.                                    |
+| `npm run release`                 | Publishes a new version with np. See [docs/releasing.md](docs/releasing.md).         |
 
 ## Repository layout
 
@@ -32,8 +33,10 @@ plugin/
 test/
   presets.test.js        Runs the real Oxlint CLI against fixtures through the presets
   plugin.test.js         Rule registry, unit test and documentation drift checks
-docs/rules.md            Rule reference (one section per rule)
+docs/<preset>.md         Preset docs: built-in rule highlights and custom rules
+                         with Bad/Good examples (graphql.md for GraphQL rules)
 docs/ideas.md            Candidate rules that are not implemented yet
+docs/releasing.md        How to publish a new version
 ```
 
 The package ships plain ESM JavaScript without a build step. Oxlint loads `oxlint.config.ts` and JS plugins with Node.js, and Node.js does not strip types from files in `node_modules`, so published code must be JavaScript.
@@ -70,7 +73,7 @@ The package ships plain ESM JavaScript without a build step. Oxlint loads `oxlin
 
 2. Register it in [`plugin/index.js`](plugin/index.js) (keep the list alphabetical).
 3. Add `plugin/rules/<rule-name>/rule.test.js` (see [Testing rules](#testing-rules)). `test/plugin.test.js` fails without it.
-4. Document it in [`docs/rules.md`](docs/rules.md) with a ``### `taito/<rule-name>` `` heading and a row in the table. `test/plugin.test.js` fails until you do.
+4. Document it in the docs file of the preset that enables it (`docs/<preset>.md`), or of its topic for an opt-in rule. Add a ``### `taito/<rule-name>` `` heading, a row in the file's rule table, a short explanation, a **Bad** and a **Good** example, and an options table if the rule takes options. `test/plugin.test.js` fails until the heading exists.
 5. Decide where it belongs:
    - **Generally applicable**: enable it in the matching preset in `configs/` and add a valid/invalid case to `test/presets.test.js`.
    - **Depends on a project's architecture or libraries**: keep it opt-in. Make paths, module names and file patterns configurable through options. Use the Taito full-stack template conventions as defaults.

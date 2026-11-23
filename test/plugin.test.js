@@ -18,10 +18,12 @@ const ruleDirectories = readdirSync(
   fileURLToPath(new URL('../plugin/rules', import.meta.url))
 );
 
-const ruleReference = readFileSync(
-  fileURLToPath(new URL('../docs/rules.md', import.meta.url)),
-  'utf8'
-);
+const docsDirectory = fileURLToPath(new URL('../docs/', import.meta.url));
+
+const ruleReference = readdirSync(docsDirectory)
+  .filter(file => file.endsWith('.md'))
+  .map(file => readFileSync(`${docsDirectory}${file}`, 'utf8'))
+  .join('\n');
 
 const packageJson = JSON.parse(
   readFileSync(new URL('../package.json', import.meta.url), 'utf8')

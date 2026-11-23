@@ -76,6 +76,7 @@
     "test:watch": "vitest",
     "verify": "npm run lint && npm run format:check && npm test",
     "pack:check": "npm pack --dry-run",
+    "release": "np",
     "prepublishOnly": "npm run verify"
   },
   "dependencies": {
@@ -88,6 +89,7 @@
     "eslint-plugin-react-x": "5.30.6"
   },
   "devDependencies": {
+    "np": "12.1.1",
     "oxfmt": "0.80.0",
     "oxlint": "1.95.0",
     "tsrs": "7.1.0-beta.tsrs4",
@@ -108,5 +110,10 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "np": {
+    "branch": "main",
+    "testScript": "verify",
+    "message": "chore: release v%s"
   }
 }
