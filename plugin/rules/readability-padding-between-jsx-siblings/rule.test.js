@@ -15,7 +15,7 @@ const ruleTester = new RuleTester({
   },
 });
 
-ruleTester.run('padding-between-jsx-siblings', rule, {
+ruleTester.run('readability-padding-between-jsx-siblings', rule, {
   valid: [
     `const view = (
   <p>

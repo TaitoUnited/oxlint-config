@@ -15,7 +15,7 @@ const ruleTester = new RuleTester({
   },
 });
 
-ruleTester.run('padding-around-function', rule, {
+ruleTester.run('readability-padding-around-function', rule, {
   valid: [
     `function first() {}
 

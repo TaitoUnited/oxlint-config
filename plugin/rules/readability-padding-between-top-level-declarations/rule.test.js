@@ -15,7 +15,7 @@ const ruleTester = new RuleTester({
   },
 });
 
-ruleTester.run('padding-between-top-level-declarations', rule, {
+ruleTester.run('readability-padding-between-top-level-declarations', rule, {
   valid: [
     `import { value } from './value.js';
 type Identifier = string;`,

@@ -15,7 +15,7 @@ const ruleTester = new RuleTester({
   },
 });
 
-ruleTester.run('padding-around-control-flow', rule, {
+ruleTester.run('readability-padding-around-control-flow', rule, {
   valid: [
     `if (active) {
   deactivate();

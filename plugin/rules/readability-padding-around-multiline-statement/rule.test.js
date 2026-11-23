@@ -15,7 +15,7 @@ const ruleTester = new RuleTester({
   },
 });
 
-ruleTester.run('padding-around-multiline-statement', rule, {
+ruleTester.run('readability-padding-around-multiline-statement', rule, {
   valid: [
     `function run() {
   return buildMember(

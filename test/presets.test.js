@@ -64,35 +64,35 @@ const baseCases = [
     invalid: 'export const first = 1;\n\n\nexport const second = 2;',
   },
   {
-    code: 'taito(padding-around-function)',
+    code: 'taito(readability-padding-around-function)',
     valid:
       'export function first() { return 1; }\n\nexport function second() { return 2; }',
     invalid:
       'export function first() { return 1; }\nexport function second() { return 2; }',
   },
   {
-    code: 'taito(padding-around-control-flow)',
+    code: 'taito(readability-padding-around-control-flow)',
     valid:
       'export function normalize(value: number) {\n  if (value < 0) {\n    return 0;\n  }\n\n  return value;\n}',
     invalid:
       'export function normalize(value: number) {\n  if (value < 0) {\n    return 0;\n  }\n  return value;\n}',
   },
   {
-    code: 'taito(padding-around-multiline-statement)',
+    code: 'taito(readability-padding-around-multiline-statement)',
     valid:
       'declare function record(value: number): void;\n\nexport function save() {\n  record(\n    1,\n  );\n\n  return 1;\n}',
     invalid:
       'declare function record(value: number): void;\n\nexport function save() {\n  record(\n    1,\n  );\n  return 1;\n}',
   },
   {
-    code: 'taito(padding-around-multiline-variable)',
+    code: 'taito(readability-padding-around-multiline-variable)',
     valid:
       'export function read() {\n  const options = {\n    enabled: true,\n  };\n\n  return options;\n}',
     invalid:
       'export function read() {\n  const options = {\n    enabled: true,\n  };\n  return options;\n}',
   },
   {
-    code: 'taito(padding-between-top-level-declarations)',
+    code: 'taito(readability-padding-between-top-level-declarations)',
     valid:
       "export type Identifier = string;\n\nexport const identifier = 'id';",
     invalid:
@@ -185,7 +185,7 @@ export default defineConfig({
             "import { useEffect } from 'react';\n\nexport function useSync(callback: () => void) {\n  useEffect(() => {\n    callback();\n  }, [callback]);\n}",
         },
         {
-          code: 'taito(padding-between-jsx-siblings)',
+          code: 'taito(readability-padding-between-jsx-siblings)',
           extension: 'tsx',
           valid:
             'export const view = (\n  <div>\n    <span>\n      First\n    </span>\n\n    <span>Second</span>\n  </div>\n);',

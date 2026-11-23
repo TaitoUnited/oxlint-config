@@ -441,11 +441,11 @@ const config = {
     'taito/no-extra-empty-lines': 'error',
     'taito/no-object-parameters': 'error',
     'taito/no-positional-func-args': 'error',
-    'taito/padding-around-control-flow': 'error',
-    'taito/padding-around-function': 'error',
-    'taito/padding-around-multiline-statement': 'error',
-    'taito/padding-around-multiline-variable': 'error',
-    'taito/padding-between-top-level-declarations': 'error',
+    'taito/readability-padding-around-control-flow': 'error',
+    'taito/readability-padding-around-function': 'error',
+    'taito/readability-padding-around-multiline-statement': 'error',
+    'taito/readability-padding-around-multiline-variable': 'error',
+    'taito/readability-padding-between-top-level-declarations': 'error',
   },
   overrides: [
     {

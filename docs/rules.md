@@ -5,30 +5,30 @@ All custom rules live in the `taito` JS plugin that ships with this package. Eve
 - **Preset** says which preset enables the rule. _Opt-in_ rules are not enabled by any preset because they depend on a project's architecture or libraries. Enable them yourself (see [Enabling opt-in rules](#enabling-opt-in-rules)).
 - **Fix** marks rules that `oxlint --fix` can fix automatically.
 
-| Rule                                                                                     | Preset | Fix |
-| ---------------------------------------------------------------------------------------- | ------ | --- |
-| [`no-chained-type-assertions`](#taitono-chained-type-assertions)                         | base   |     |
-| [`no-extra-empty-lines`](#taitono-extra-empty-lines)                                     | base   | ✓   |
-| [`no-object-parameters`](#taitono-object-parameters)                                     | base   |     |
-| [`no-positional-func-args`](#taitono-positional-func-args)                               | base   |     |
-| [`padding-around-control-flow`](#taitopadding-around-control-flow)                       | base   | ✓   |
-| [`padding-around-function`](#taitopadding-around-function)                               | base   | ✓   |
-| [`padding-around-multiline-statement`](#taitopadding-around-multiline-statement)         | base   | ✓   |
-| [`padding-around-multiline-variable`](#taitopadding-around-multiline-variable)           | base   | ✓   |
-| [`padding-between-top-level-declarations`](#taitopadding-between-top-level-declarations) | base   | ✓   |
-| [`no-function-deps-in-effect`](#taitono-function-deps-in-effect)                         | react  |     |
-| [`padding-between-jsx-siblings`](#taitopadding-between-jsx-siblings)                     | react  | ✓   |
-| [`no-module-scope-trans`](#taitono-module-scope-trans)                                   | lingui |     |
-| [`no-pointer-cursor`](#taitono-pointer-cursor)                                           | panda  |     |
-| [`panda-style-conventions`](#taitopanda-style-conventions)                               | panda  |     |
-| [`lazy-load-dialogs`](#taitolazy-load-dialogs)                                           | opt-in |     |
-| [`no-redundant-stack`](#taitono-redundant-stack)                                         | opt-in |     |
-| [`no-ssr-guards`](#taitono-ssr-guards)                                                   | opt-in |     |
-| [`graphql-no-typename-selection`](#taitographql-no-typename-selection)                   | opt-in |     |
-| [`no-internal-test-mocks`](#taitono-internal-test-mocks)                                 | opt-in |     |
-| [`helpers-after-main`](#taitohelpers-after-main)                                         | opt-in |     |
-| [`graphql-mutation-returns-entity`](#taitographql-mutation-returns-entity)               | opt-in |     |
-| [`graphql-no-description`](#taitographql-no-description)                                 | opt-in | ✓   |
+| Rule                                                                                                             | Preset | Fix |
+| ---------------------------------------------------------------------------------------------------------------- | ------ | --- |
+| [`no-chained-type-assertions`](#taitono-chained-type-assertions)                                                 | base   |     |
+| [`no-extra-empty-lines`](#taitono-extra-empty-lines)                                                             | base   | ✓   |
+| [`no-object-parameters`](#taitono-object-parameters)                                                             | base   |     |
+| [`no-positional-func-args`](#taitono-positional-func-args)                                                       | base   |     |
+| [`readability-padding-around-control-flow`](#taitoreadability-padding-around-control-flow)                       | base   | ✓   |
+| [`readability-padding-around-function`](#taitoreadability-padding-around-function)                               | base   | ✓   |
+| [`readability-padding-around-multiline-statement`](#taitoreadability-padding-around-multiline-statement)         | base   | ✓   |
+| [`readability-padding-around-multiline-variable`](#taitoreadability-padding-around-multiline-variable)           | base   | ✓   |
+| [`readability-padding-between-top-level-declarations`](#taitoreadability-padding-between-top-level-declarations) | base   | ✓   |
+| [`no-function-deps-in-effect`](#taitono-function-deps-in-effect)                                                 | react  |     |
+| [`readability-padding-between-jsx-siblings`](#taitoreadability-padding-between-jsx-siblings)                     | react  | ✓   |
+| [`no-module-scope-trans`](#taitono-module-scope-trans)                                                           | lingui |     |
+| [`no-pointer-cursor`](#taitono-pointer-cursor)                                                                   | panda  |     |
+| [`panda-style-conventions`](#taitopanda-style-conventions)                                                       | panda  |     |
+| [`lazy-load-dialogs`](#taitolazy-load-dialogs)                                                                   | opt-in |     |
+| [`no-redundant-stack`](#taitono-redundant-stack)                                                                 | opt-in |     |
+| [`no-ssr-guards`](#taitono-ssr-guards)                                                                           | opt-in |     |
+| [`graphql-no-typename-selection`](#taitographql-no-typename-selection)                                           | opt-in |     |
+| [`no-internal-test-mocks`](#taitono-internal-test-mocks)                                                         | opt-in |     |
+| [`helpers-after-main`](#taitohelpers-after-main)                                                                 | opt-in |     |
+| [`graphql-mutation-returns-entity`](#taitographql-mutation-returns-entity)                                       | opt-in |     |
+| [`graphql-no-description`](#taitographql-no-description)                                                         | opt-in | ✓   |
 
 Regex options are JavaScript regular expression sources written as strings. Use `String.raw` in `oxlint.config.ts` to avoid double escaping.
 
@@ -101,27 +101,27 @@ function rename(from: string, to: string) {} // ✗
 function rename({ from, to }: { from: string; to: string }) {} // ✓
 ```
 
-### `taito/padding-around-control-flow`
+### `taito/readability-padding-around-control-flow`
 
 Requires exactly one blank line before and after multiline `if`, `for`, `while`, `do`, `switch` and `try` statements.
 
-### `taito/padding-around-function`
+### `taito/readability-padding-around-function`
 
 Requires exactly one blank line around function declarations, class methods and object methods. Overload signatures stay together.
 
-### `taito/padding-around-multiline-statement`
+### `taito/readability-padding-around-multiline-statement`
 
 Requires exactly one blank line around other multiline statements, such as a function call spread over several lines.
 
-### `taito/padding-around-multiline-variable`
+### `taito/readability-padding-around-multiline-variable`
 
 Requires exactly one blank line next to multiline variable declarations.
 
-### `taito/padding-between-top-level-declarations`
+### `taito/readability-padding-between-top-level-declarations`
 
 Requires a blank line between top-level declarations. Consecutive single-line `const` or `type` declarations may stay grouped.
 
-The padding rules split the work so that each boundary is reported by only one rule, and `no-extra-empty-lines` handles excess blank lines. Together they give a consistent vertical rhythm that a formatter does not enforce.
+The `readability-padding-*` rules split the work so that each boundary is reported by only one rule, and `no-extra-empty-lines` handles excess blank lines. Together they give a consistent vertical rhythm that a formatter does not enforce.
 
 ## React rules
 
@@ -135,7 +135,7 @@ useEffect(() => {
 }, [value, onChange]); // ✗ onChange
 ```
 
-### `taito/padding-between-jsx-siblings`
+### `taito/readability-padding-between-jsx-siblings`
 
 Requires a blank line after multiline JSX children (elements, fragments and expression containers). Elements that contain text are left alone.
 

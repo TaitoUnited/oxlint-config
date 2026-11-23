@@ -14,13 +14,13 @@ import { rule as noPointerCursor } from './rules/no-pointer-cursor/rule.js';
 import { rule as noPositionalFuncArgs } from './rules/no-positional-func-args/rule.js';
 import { rule as noRedundantStack } from './rules/no-redundant-stack/rule.js';
 import { rule as noSsrGuards } from './rules/no-ssr-guards/rule.js';
-import { rule as paddingAroundControlFlow } from './rules/padding-around-control-flow/rule.js';
-import { rule as paddingAroundFunction } from './rules/padding-around-function/rule.js';
-import { rule as paddingAroundMultilineStatement } from './rules/padding-around-multiline-statement/rule.js';
-import { rule as paddingAroundMultilineVariable } from './rules/padding-around-multiline-variable/rule.js';
-import { rule as paddingBetweenJsxSiblings } from './rules/padding-between-jsx-siblings/rule.js';
-import { rule as paddingBetweenTopLevelDeclarations } from './rules/padding-between-top-level-declarations/rule.js';
 import { rule as pandaStyleConventions } from './rules/panda-style-conventions/rule.js';
+import { rule as readabilityPaddingAroundControlFlow } from './rules/readability-padding-around-control-flow/rule.js';
+import { rule as readabilityPaddingAroundFunction } from './rules/readability-padding-around-function/rule.js';
+import { rule as readabilityPaddingAroundMultilineStatement } from './rules/readability-padding-around-multiline-statement/rule.js';
+import { rule as readabilityPaddingAroundMultilineVariable } from './rules/readability-padding-around-multiline-variable/rule.js';
+import { rule as readabilityPaddingBetweenJsxSiblings } from './rules/readability-padding-between-jsx-siblings/rule.js';
+import { rule as readabilityPaddingBetweenTopLevelDeclarations } from './rules/readability-padding-between-top-level-declarations/rule.js';
 import { createPlugin } from './utils/utils.js';
 
 export const rules = {
@@ -39,12 +39,17 @@ export const rules = {
   'no-positional-func-args': noPositionalFuncArgs,
   'no-redundant-stack': noRedundantStack,
   'no-ssr-guards': noSsrGuards,
-  'padding-around-control-flow': paddingAroundControlFlow,
-  'padding-around-function': paddingAroundFunction,
-  'padding-around-multiline-statement': paddingAroundMultilineStatement,
-  'padding-around-multiline-variable': paddingAroundMultilineVariable,
-  'padding-between-jsx-siblings': paddingBetweenJsxSiblings,
-  'padding-between-top-level-declarations': paddingBetweenTopLevelDeclarations,
+  'readability-padding-around-control-flow':
+    readabilityPaddingAroundControlFlow,
+  'readability-padding-around-function': readabilityPaddingAroundFunction,
+  'readability-padding-around-multiline-statement':
+    readabilityPaddingAroundMultilineStatement,
+  'readability-padding-around-multiline-variable':
+    readabilityPaddingAroundMultilineVariable,
+  'readability-padding-between-jsx-siblings':
+    readabilityPaddingBetweenJsxSiblings,
+  'readability-padding-between-top-level-declarations':
+    readabilityPaddingBetweenTopLevelDeclarations,
   'panda-style-conventions': pandaStyleConventions,
 };
 
