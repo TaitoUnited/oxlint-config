@@ -16,18 +16,25 @@
 
 ## Installation
 
+Install the config, Oxlint and a type-aware backend:
+
 ```sh
 npm install --save-dev @taito/oxlint-config oxlint tsrs
 ```
 
-> [!IMPORTANT]
-> Requires Node.js 22.18 or newer and Oxlint 1.94 or newer. Node.js 22.18 is the first 22.x release that loads `oxlint.config.ts` with built-in type stripping.
+The presets turn on [type-aware rules](https://oxc.rs/docs/guide/usage/linter/type-aware.html) which run in a separate backend. Pick one:
 
-- [oxlint](https://oxc.rs/docs/guide/usage/linter.html) is a fast linter for JS/TS projects.
-- [tsrs](https://github.com/oxc-project/tsrs) is the backend for type-aware rules (`typescript/no-floating-promises`, `typescript/no-unsafe-*`, ...).
+| Backend                                                   | Package           | Based on       |
+| --------------------------------------------------------- | ----------------- | -------------- |
+| [tsrs](https://github.com/oxc-project/tsrs) (recommended) | `tsrs`            | TypeScript 7.1 |
+| [tsgolint](https://github.com/oxc-project/tsgolint)       | `oxlint-tsgolint` | TypeScript 7.0 |
+
+Install only one: Oxlint uses `tsrs` whenever it is installed. Neither backend needs `typescript`.
+
+**Requirements:** Node.js 22.18+ (the first 22.x release that loads `oxlint.config.ts`) and Oxlint 1.94+.
 
 > [!WARNING]
-> The `react` preset does not work with TypeScript 7 yet. Its [ESLint React](https://eslint-react.xyz) plugins depend on `@typescript-eslint`, which supports TypeScript 6.0 at most, and Oxlint fails to load them in a project that has TypeScript 7 installed. Keep React projects on TypeScript 6 until ESLint React supports TypeScript 7. The other presets work with TypeScript 7.
+> **React projects must stay on TypeScript 6.** The `react` preset's [ESLint React](https://eslint-react.xyz) plugins depend on `@typescript-eslint`, which supports TypeScript 6.0 at most, so Oxlint fails to load them when TypeScript 7 is installed. The other presets work with TypeScript 7.
 
 ## Usage
 

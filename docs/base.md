@@ -12,7 +12,7 @@ export default defineConfig({
 });
 ```
 
-The preset turns on type-aware linting, so install `tsrs` next to `oxlint`.
+The preset turns on type-aware linting, so install a type-aware backend next to `oxlint`: `tsrs` or `oxlint-tsgolint`. See [Installation](../README.md#installation).
 
 ## Built-in rules
 

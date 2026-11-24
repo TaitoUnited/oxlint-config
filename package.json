@@ -96,15 +96,19 @@
     "np": "12.1.1",
     "oxfmt": "0.80.0",
     "oxlint": "1.95.0",
-    "tsrs": "7.1.0-beta.tsrs4",
+    "tsrs": "7.1.0-beta.tsrs5",
     "typescript": "npm:@typescript/typescript6@6.0.2",
     "vitest": "5.1.1"
   },
   "peerDependencies": {
     "oxlint": "^1.94.0",
+    "oxlint-tsgolint": ">=7.0.0",
     "tsrs": ">=7.1.0-beta.tsrs3"
   },
   "peerDependenciesMeta": {
+    "oxlint-tsgolint": {
+      "optional": true
+    },
     "tsrs": {
       "optional": true
     }

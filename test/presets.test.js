@@ -110,7 +110,7 @@ const baseCases = [
       "export type Identifier = string;\nexport const identifier = 'id';",
   },
   {
-    // Requires the type-aware backend (tsrs) to be installed and enabled.
+    // Requires a type-aware backend (tsrs here) to be installed and enabled.
     code: 'typescript(no-floating-promises)',
     valid: 'export async function remember() { await Promise.resolve(1); }',
     invalid: 'export function forget() { Promise.resolve(1); }',
