@@ -15,6 +15,7 @@ const config = {
   rules: {
     'taito/graphql-mutation-returns-entity': 'error',
     'taito/graphql-no-description': 'error',
+    'taito/graphql-no-string-refetch-queries': 'error',
     'taito/graphql-no-typename-selection': 'error',
   },
 };

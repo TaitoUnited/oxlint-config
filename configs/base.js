@@ -442,6 +442,7 @@ const config = {
     'taito/no-object-parameters': 'error',
     'taito/no-positional-func-args': 'error',
     'taito/no-redundant-calc': 'error',
+    'taito/require-disable-reason': 'error',
     'taito/readability-padding-around-control-flow': 'error',
     'taito/readability-padding-around-function': 'error',
     'taito/readability-padding-around-multiline-statement': 'error',

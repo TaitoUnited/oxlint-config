@@ -120,6 +120,7 @@ rules: {
   'taito/no-ssr-guards': 'error',
   'taito/react-lazy-load-dialogs': ['error', { loader: 'lazy' }],
   'taito/react-no-redundant-stack': ['error', { stackModules: ['~/components/stack'] }],
+  'taito/tanstack-router-no-route-imports': 'error',
 }
 ```
 
@@ -199,6 +200,43 @@ export const field = (
 | --------------------- | ------------------------------ | -------------------------------------------------------------------------------------------------------------- |
 | `stackModules`        | `['@/components/ui/stack']`    | Import specifiers of the project's Stack component. Relative imports that resolve to the same path also match. |
 | `styledModulePattern` | `(design\|styled)-system/jsx$` | Import sources that export Panda's `styled`.                                                                   |
+
+### `taito/tanstack-router-no-route-imports`
+
+Disallows static imports from [TanStack Router](https://tanstack.com/router) route modules (`*.route.tsx` by default). Each route is its own code-split chunk, and a static import bundles the route, and everything it imports, into the importing module. Access another route with `getRouteApi()`, and move code that several routes share into a separate module. Type-only imports and dynamic `import()` calls are allowed, and generated route trees (`*.gen.ts`) are skipped.
+
+<!-- filename: src/features/user/user-toolbar.tsx -->
+
+**Bad**
+
+```tsx
+import { Route as userRoute } from './user.route';
+
+export function UserToolbar() {
+  const { userId } = userRoute.useParams();
+
+  return <EditUserButton userId={userId} />;
+}
+```
+
+**Good**
+
+```tsx
+import { getRouteApi } from '@tanstack/react-router';
+
+const userRoute = getRouteApi('/users/$userId');
+
+export function UserToolbar() {
+  const { userId } = userRoute.useParams();
+
+  return <EditUserButton userId={userId} />;
+}
+```
+
+| Option               | Default                     | Description                                                    |
+| -------------------- | --------------------------- | -------------------------------------------------------------- |
+| `routeModulePattern` | `\.route(\.[cm]?[jt]sx?)?$` | Import sources that are route modules.                         |
+| `ignorePattern`      | `\.gen\.[cm]?[jt]sx?$`      | File paths that may import route modules, such as route trees. |
 
 ### `taito/no-ssr-guards`
 

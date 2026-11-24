@@ -64,6 +64,12 @@ const baseCases = [
     invalid: "export const width = 'calc(100%)';",
   },
   {
+    code: 'taito(require-disable-reason)',
+    valid:
+      '// oxlint-disable-next-line no-console -- CLI output\nconsole.log(1);',
+    invalid: '// oxlint-disable-next-line no-console\nconsole.log(1);',
+  },
+  {
     code: 'taito(readability-padding-no-extra-empty-lines)',
     valid: 'export const first = 1;\n\nexport const second = 2;',
     invalid: 'export const first = 1;\n\n\nexport const second = 2;',
@@ -339,6 +345,13 @@ export default defineConfig({
             "declare const builder: any;\n\nbuilder.mutationField('renameUser', (t: any) => t.field({ type: 'Boolean', resolve: () => true }));",
         },
         {
+          code: 'taito(graphql-no-string-refetch-queries)',
+          valid:
+            'declare function mutate(options: unknown): void;\ndeclare const TasksQuery: unknown;\n\nmutate({ refetchQueries: [TasksQuery] });',
+          invalid:
+            "declare function mutate(options: unknown): void;\n\nmutate({ refetchQueries: ['Tasks'] });",
+        },
+        {
           code: 'taito(graphql-no-description)',
           name: 'user-type',
           valid:
@@ -363,6 +376,7 @@ export default defineConfig({
   rules: {
     'taito/react-no-redundant-stack': ['error', { stackModules: ['~/ui/stack'] }],
     'taito/no-ssr-guards': 'error',
+    'taito/tanstack-router-no-route-imports': 'error',
   },
 });`,
       cases: [
@@ -373,6 +387,13 @@ export default defineConfig({
             'import { Stack } from \'~/ui/stack\';\n\nexport const view = (\n  <Stack gap="1">\n    <span />\n    <span />\n  </Stack>\n);',
           invalid:
             'import { Stack } from \'~/ui/stack\';\n\nexport const view = (\n  <Stack gap="1">\n    <span />\n  </Stack>\n);',
+        },
+        {
+          code: 'taito(tanstack-router-no-route-imports)',
+          valid:
+            "import type { UserData } from './user.route';\n\nexport type Data = UserData;",
+          invalid:
+            "import { Route } from './user.route';\n\nexport const route = Route;",
         },
         {
           code: 'taito(no-ssr-guards)',

@@ -12,7 +12,7 @@
 
 - 📐 **Strict, type-aware defaults.** More than 360 built-in Oxlint rules across the `eslint`, `typescript`, `unicorn`, `import`, `oxc` and `promise` plugins, with type-aware rules turned on.
 - 🧩 **Composable presets.** Combine a base preset with presets for Node.js, React, Vitest, Playwright, Lingui, Panda CSS and GraphQL.
-- 🛠 **Custom rules.** The `taito` plugin ships 26 rules for readable spacing, safer function signatures, React effects and common project conventions. See the [preset docs](#presets).
+- 🛠 **Custom rules.** The `taito` plugin ships 29 rules for readable spacing, safer function signatures, React effects and common project conventions. See the [preset docs](#presets).
 
 ## Installation
 
@@ -40,8 +40,11 @@ import { defineConfig } from 'oxlint';
 export default defineConfig({
   extends: [base],
   env: base.env,
+  options: { reportUnusedDisableDirectives: 'error' },
 });
 ```
+
+`reportUnusedDisableDirectives` reports `oxlint-disable` comments that no longer suppress anything, so stale exceptions get cleaned up. Oxlint only reads it from the root config, so a preset cannot set it for you.
 
 Then lint:
 

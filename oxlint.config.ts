@@ -8,6 +8,7 @@ import vitest from './configs/vitest.js';
 export default defineConfig({
   extends: [base, node, vitest],
   env: { ...base.env, ...node.env },
+  options: { reportUnusedDisableDirectives: 'error' },
   overrides: [
     {
       // Rules and configs are untyped JavaScript: AST nodes are `any`.

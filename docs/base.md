@@ -33,6 +33,7 @@ See [`configs/base.js`](../configs/base.js) for the full list.
 | [`no-object-parameters`](#taitono-object-parameters)                                                             |     |
 | [`no-positional-func-args`](#taitono-positional-func-args)                                                       |     |
 | [`no-redundant-calc`](#taitono-redundant-calc)                                                                   |     |
+| [`require-disable-reason`](#taitorequire-disable-reason)                                                         |     |
 | [`readability-padding-around-control-flow`](#taitoreadability-padding-around-control-flow)                       | ✓   |
 | [`readability-padding-around-function`](#taitoreadability-padding-around-function)                               | ✓   |
 | [`readability-padding-around-multiline-statement`](#taitoreadability-padding-around-multiline-statement)         | ✓   |
@@ -111,6 +112,24 @@ const panelWidth = 'calc(var(--panel-width))';
 ```ts
 const panelWidth = 'var(--panel-width)';
 const contentWidth = 'calc(100% - var(--panel-width))';
+```
+
+### `taito/require-disable-reason`
+
+Requires a reason after `--` in every `oxlint-disable` and `eslint-disable` comment. A disabled rule is an exception to the team's conventions, and the reason tells reviewers and later readers why it is safe. This matches `typescript/ban-ts-comment`, which requires a description for `@ts-expect-error`.
+
+**Bad**
+
+```ts
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
+const user = response.data as User;
+```
+
+**Good**
+
+```ts
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- the API schema guarantees this shape
+const user = response.data as User;
 ```
 
 ### Readable spacing

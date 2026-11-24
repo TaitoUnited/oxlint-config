@@ -1,6 +1,7 @@
 import packageJson from '../package.json' with { type: 'json' };
 import { rule as graphqlMutationReturnsEntity } from './rules/graphql-mutation-returns-entity/rule.js';
 import { rule as graphqlNoDescription } from './rules/graphql-no-description/rule.js';
+import { rule as graphqlNoStringRefetchQueries } from './rules/graphql-no-string-refetch-queries/rule.js';
 import { rule as graphqlNoTypenameSelection } from './rules/graphql-no-typename-selection/rule.js';
 import { rule as helpersAfterMain } from './rules/helpers-after-main/rule.js';
 import { rule as linguiNoModuleScopeTrans } from './rules/lingui-no-module-scope-trans/rule.js';
@@ -25,11 +26,14 @@ import { rule as readabilityPaddingAroundMultilineVariable } from './rules/reada
 import { rule as readabilityPaddingBetweenJsxSiblings } from './rules/readability-padding-between-jsx-siblings/rule.js';
 import { rule as readabilityPaddingBetweenTopLevelDeclarations } from './rules/readability-padding-between-top-level-declarations/rule.js';
 import { rule as readabilityPaddingNoExtraEmptyLines } from './rules/readability-padding-no-extra-empty-lines/rule.js';
+import { rule as requireDisableReason } from './rules/require-disable-reason/rule.js';
+import { rule as tanstackRouterNoRouteImports } from './rules/tanstack-router-no-route-imports/rule.js';
 import { createPlugin } from './utils/utils.js';
 
 export const rules = {
   'graphql-mutation-returns-entity': graphqlMutationReturnsEntity,
   'graphql-no-description': graphqlNoDescription,
+  'graphql-no-string-refetch-queries': graphqlNoStringRefetchQueries,
   'graphql-no-typename-selection': graphqlNoTypenameSelection,
   'helpers-after-main': helpersAfterMain,
   'lingui-no-module-scope-trans': linguiNoModuleScopeTrans,
@@ -60,6 +64,8 @@ export const rules = {
     readabilityPaddingBetweenTopLevelDeclarations,
   'readability-padding-no-extra-empty-lines':
     readabilityPaddingNoExtraEmptyLines,
+  'require-disable-reason': requireDisableReason,
+  'tanstack-router-no-route-imports': tanstackRouterNoRouteImports,
 };
 
 export default createPlugin({

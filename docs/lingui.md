@@ -17,7 +17,8 @@ export default defineConfig({
 ## Built-in rules
 
 - **Macros only:** `Trans` and `useLingui` must be imported from `@lingui/react/macro`, not from the `@lingui/react` runtime.
-- **Translatable messages:** no expressions inside messages, no messages that are only a variable or a single tag, and no `<Trans>` inside `<Trans>`.
+- **Translatable messages:** no expressions inside messages, no messages that are only a variable or a single tag, and no `<Trans>` or `<Plural>` inside `<Trans>`.
+- **Plurals:** one consistent format for plural forms (`# book`, not `${count} book`).
 - **Locale-aware calls:** `t` must be called inside a function, after the locale is active.
 
 See [`configs/lingui.js`](../configs/lingui.js) for the full list.

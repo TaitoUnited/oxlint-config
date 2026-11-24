@@ -23,11 +23,12 @@ rules: {
 
 ## Custom rules
 
-| Rule                                                                       | Side   | Fix |
-| -------------------------------------------------------------------------- | ------ | --- |
-| [`graphql-no-typename-selection`](#taitographql-no-typename-selection)     | client |     |
-| [`graphql-mutation-returns-entity`](#taitographql-mutation-returns-entity) | server |     |
-| [`graphql-no-description`](#taitographql-no-description)                   | server | ✓   |
+| Rule                                                                           | Side   | Fix |
+| ------------------------------------------------------------------------------ | ------ | --- |
+| [`graphql-no-typename-selection`](#taitographql-no-typename-selection)         | client |     |
+| [`graphql-mutation-returns-entity`](#taitographql-mutation-returns-entity)     | server |     |
+| [`graphql-no-description`](#taitographql-no-description)                       | server | ✓   |
+| [`graphql-no-string-refetch-queries`](#taitographql-no-string-refetch-queries) | client |     |
 
 ### `taito/graphql-no-typename-selection`
 
@@ -58,6 +59,28 @@ export const userQuery = graphql(`
     }
   }
 `);
+```
+
+### `taito/graphql-no-string-refetch-queries`
+
+Requires query documents instead of operation name strings in Apollo's `refetchQueries`. A string such as `'Tasks'` is not type-checked, so renaming or removing the query silently stops the refetch. The rule also follows a `const` array passed as `refetchQueries`.
+
+**Bad**
+
+```ts
+await createTask({
+  variables: { input },
+  refetchQueries: ['Tasks', 'TaskAssignees'],
+});
+```
+
+**Good**
+
+```ts
+await createTask({
+  variables: { input },
+  refetchQueries: [TasksQuery, TaskAssigneesQuery],
+});
 ```
 
 ### `taito/graphql-mutation-returns-entity`
